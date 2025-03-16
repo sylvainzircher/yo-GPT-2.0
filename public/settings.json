@@ -1,0 +1,7 @@
+{
+  "model": "deepseek-r1",
+  "temperature": "80",
+  "maxTokens": 60000,
+  "autoSave": true,
+  "autoTitle": true
+}
