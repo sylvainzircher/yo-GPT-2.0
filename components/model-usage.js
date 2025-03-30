@@ -48,7 +48,7 @@ export default function ModelUsage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 2 }}
           >
-            <div className="card bg-base-100 shadow-xl overflow-y-auto fixed top-20 border w-1/2 h-3/4">
+            <div className="card bg-base-100 shadow-xl border border-neutral-content overflow-y-auto fixed top-20 w-1/2 h-3/4">
               <UsageTrend />
             </div>
           </motion.div>

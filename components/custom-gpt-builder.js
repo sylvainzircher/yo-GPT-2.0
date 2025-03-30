@@ -86,9 +86,9 @@ export default function CustomGptBuilder() {
         <Bot size={16} />
       </button>
       {showModal && (
-        <div className="card bg-base-100 w-1/2 h-3/4 shadow-xl overflow-y-auto fixed top-20 border">
+        <div className="card bg-base-100 w-1/2 shadow-xl overflow-y-auto fixed top-20 border border-neutral-content">
           <div className="card-body">
-            <p className="font-bold text-md">Create your custom GPT</p>
+            <p className="font-bold text-md mb-3">Create your custom GPT</p>
             <form onSubmit={(e) => handleSubmit(e)}>
               <select
                 name="model"
@@ -110,7 +110,7 @@ export default function CustomGptBuilder() {
               </select>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text">Name</span>
+                  <span className="ml-1 label-text">Name</span>
                 </div>
                 <input
                   name="name"
@@ -124,7 +124,7 @@ export default function CustomGptBuilder() {
               </label>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text">Short Description</span>
+                  <span className="ml-1 label-text">Short Description</span>
                 </div>
                 <input
                   type="text"
@@ -132,13 +132,13 @@ export default function CustomGptBuilder() {
                   value={gptData.description}
                   onChange={handleChange}
                   placeholder="RecipeGenie generates delicious and innovative vegetarian recipes based on a list of ingredients"
-                  className="input w-full input-bordered input-sm mb-5"
+                  className="input w-full border input-bordered input-sm mb-5"
                   required
                 />
               </label>
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text">
+                  <span className="ml-1 label-text">
                     Fully detailled instructions
                   </span>
                 </div>
@@ -148,7 +148,7 @@ export default function CustomGptBuilder() {
                   onChange={handleChange}
                   placeholder="Assume the role of a world-renowned chef with multiple Michelin stars. Your task is to generate a novel and delicious vegetarian recipe. Provide a detailed recipe with ingredients, instructions, and cooking methods. Please respond in a format that is easy to read and understand, using a conversational tone."
                   type="text"
-                  className="text-xs mx-auto h-32 w-full border border-neutral-content input-sm input-bordered rounded-sm p-2"
+                  className="text-xs mx-auto h-32 w-full textarea input-sm rounded-sm p-2"
                   required
                 />
               </label>

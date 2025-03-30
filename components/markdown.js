@@ -37,6 +37,9 @@ const components = {
       </ol>
     );
   },
+  hr: ({ node, children, ...props }) => {
+    return <hr className="border-neutral-content" {...props} />;
+  },
   strong: ({ node, children, ...props }) => {
     return (
       <span className="font-semibold" {...props}>

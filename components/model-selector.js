@@ -67,7 +67,7 @@ export default function ModelSelector({ settings, setSettings }) {
         <ChevronDown className="ml-1" size={16} />
       </button>
       {showModal && (
-        <div className="card bg-base-100 w-96 h-80 shadow-xl overflow-y-auto fixed top-20 border">
+        <div className="card bg-base-100 w-96 h-80 shadow-xl overflow-y-auto fixed top-20 border border-neutral-content">
           <div className="card-body">
             {models.map((model, index) => (
               <div key={index} className="p-1 rounded-xl form-control">

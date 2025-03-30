@@ -80,7 +80,7 @@ const Sidebar = () => {
       >
         {isOpen && (
           <aside className="h-screen flex flex-col w-72 bg-base-200 overflow-y-auto">
-            <div className="flex justify-between items-center p-2 sticky top-0 z-50">
+            <div className="flex justify-between items-center p-2 sticky top-0 z-30">
               <button
                 className="btn btn-square btn-ghost"
                 onClick={() => setIsOpen(!isOpen)}
@@ -156,7 +156,7 @@ const Sidebar = () => {
         )}
         {!isOpen && (
           <aside className="h-screen flex flex-col overflow-y-auto">
-            <div className="flex justify-between items-center p-2 sticky top-0 z-50">
+            <div className="flex justify-between items-center p-2 sticky top-0 z-30">
               <button
                 className="btn btn-square btn-ghost"
                 onClick={() => setIsOpen(!isOpen)}

@@ -46,7 +46,7 @@ export default function ButtonScrollDown({ endRef, isStreaming }) {
     <div className="w-2/3">
       {showButton && (
         <button
-          className="z-40 fixed bg-base-100 bottom-48 left-1/2 w-10 border rounded-full"
+          className="z-20 fixed bg-base-100 bottom-48 left-1/2 w-10 border rounded-full"
           onClick={scrollToBottom}
         >
           <ChevronDown size={20} className="mx-auto m-2" />

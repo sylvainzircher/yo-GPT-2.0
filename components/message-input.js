@@ -129,7 +129,7 @@ export default function MessageInput({
                   onKeyDown={handleKeyDown}
                   placeholder="Type your question here..."
                   type="text"
-                  className="text-sm px-4 py-2 mx-auto h-full w-full bg-base-200 focus:outline-none focus:ring-1 focus:ring-neutral-500 rounded-xl shadow-sm resize-none"
+                  className="textarea text-sm px-4 py-2 mx-auto h-full w-full bg-base-200 focus:outline-none focus:ring-1 focus:ring-neutral-500 rounded-xl resize-none"
                   required
                 />
               </div>
