@@ -171,7 +171,7 @@ export default function ModelSettings({ settings, setSettings }) {
                   >
                     <BadgeInfo size={14} className="text-primary mr-2" />
                   </div>
-                  <p className="text-sm">Max Tokens: </p>
+                  <p className="text-sm w-full">Max Tokens: </p>
                   <label className="input input-bordered input-sm">
                     <div className="flex flex-row items-center">
                       <BookOpenText size={16} className="mr-2" />

@@ -107,7 +107,7 @@ export default function UsageTrend() {
       {dataLoaded && (
         <div className="p-3 mx-auto w-full h-full">
           <div className="w-full border-b mb-5 pb-5">
-            <div className="form-control w-32">
+            <div className="form-control w-32 text-sm pb-2">
               <label className="label cursor-pointer">
                 <span
                   className={
@@ -120,7 +120,7 @@ export default function UsageTrend() {
                 </span>
                 <input
                   type="checkbox"
-                  className="toggle toggle-sm border-primary bg-primary hover:bg-blue-500"
+                  className="toggle toggle-sm border-primary text-primary checked-border-primary checked-text-primary"
                   defaultChecked
                   onChange={() => setToggleAmount(!toggleAmount)}
                 />

@@ -1,5 +1,5 @@
 {
-  "model": "deepseek-r1",
+  "model": "mixtral-8x22b",
   "temperature": "80",
   "maxTokens": 60000,
   "autoSave": true,

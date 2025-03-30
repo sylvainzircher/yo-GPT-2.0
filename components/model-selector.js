@@ -84,7 +84,7 @@ export default function ModelSelector({ settings, setSettings }) {
                     <input
                       type="radio"
                       name="model"
-                      className="radio radio-sm checked:bg-primary justify-right"
+                      className="radio radio-sm checked:radio-primary justify-right"
                       defaultChecked={model.name === settings.model}
                       onClick={() => {
                         modelSelection(model.name);

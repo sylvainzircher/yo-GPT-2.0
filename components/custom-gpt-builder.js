@@ -87,12 +87,12 @@ export default function CustomGptBuilder() {
       </button>
       {showModal && (
         <div className="card bg-base-100 w-1/2 h-3/4 shadow-xl overflow-y-auto fixed top-20 border">
-          <div className="card-body p-5">
+          <div className="card-body">
             <p className="font-bold text-md">Create your custom GPT</p>
             <form onSubmit={(e) => handleSubmit(e)}>
               <select
                 name="model"
-                className="select select-bordered select-sm w-full text-sm max-w-xs mb-2"
+                className="select select-bordered block select-sm w-full text-sm max-w-xs mb-5"
                 onChange={handleChange}
                 value={gptData.model}
                 required
@@ -118,7 +118,7 @@ export default function CustomGptBuilder() {
                   value={gptData.name}
                   onChange={handleChange}
                   placeholder="RecipeGenie: Vegetarian Recipe Generation"
-                  className="input w-full input-bordered input-sm mb-2"
+                  className="input w-full input-bordered input-sm mb-5"
                   required
                 />
               </label>
@@ -132,7 +132,7 @@ export default function CustomGptBuilder() {
                   value={gptData.description}
                   onChange={handleChange}
                   placeholder="RecipeGenie generates delicious and innovative vegetarian recipes based on a list of ingredients"
-                  className="input w-full input-bordered input-sm mb-2"
+                  className="input w-full input-bordered input-sm mb-5"
                   required
                 />
               </label>
@@ -148,7 +148,7 @@ export default function CustomGptBuilder() {
                   onChange={handleChange}
                   placeholder="Assume the role of a world-renowned chef with multiple Michelin stars. Your task is to generate a novel and delicious vegetarian recipe. Provide a detailed recipe with ingredients, instructions, and cooking methods. Please respond in a format that is easy to read and understand, using a conversational tone."
                   type="text"
-                  className="text-sm mt-2 mx-auto h-32 w-full border input-sm input-bordered rounded-xl p-2"
+                  className="text-xs mx-auto h-32 w-full border border-neutral-content input-sm input-bordered rounded-sm p-2"
                   required
                 />
               </label>

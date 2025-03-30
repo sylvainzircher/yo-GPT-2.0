@@ -4,8 +4,10 @@ import { useChat } from "@ai-sdk/react";
 import { useRef, useState } from "react";
 import Image from "next/image";
 
-export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+export default function chatWithDoc() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: "/api/chat-with-doc",
+  });
 
   const [files, setFiles] = useState(undefined);
   const fileInputRef = useRef(null);
@@ -16,7 +18,7 @@ export default function Chat() {
         <div key={m.id} className="whitespace-pre-wrap">
           {m.role === "user" ? "User: " : "AI: "}
           {m.content}
-          <div>
+          {/* <div>
             {m?.experimental_attachments
               ?.filter(
                 (attachment) =>
@@ -42,7 +44,7 @@ export default function Chat() {
                   />
                 ) : null
               )}
-          </div>
+          </div> */}
         </div>
       ))}
 

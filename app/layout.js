@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
   const apiKey = process.env.NEXT_PUBLIC_FIREWORKS_API_KEY;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <body className="antialiased">
         <Toaster richColors position="top-center" />
         {/* Show Warning if API Key is Missing */}
