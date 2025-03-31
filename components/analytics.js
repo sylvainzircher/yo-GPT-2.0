@@ -106,7 +106,7 @@ export default function UsageTrend() {
       )}
       {dataLoaded && (
         <div className="p-3 mx-auto w-full h-full">
-          <div className="w-full border-b mb-5 pb-5">
+          <div className="w-full border-b border-neutral-content mb-5 pb-5">
             <div className="form-control w-32 text-sm pb-2">
               <label className="label cursor-pointer">
                 <span
@@ -142,7 +142,7 @@ export default function UsageTrend() {
           {toggleAmount ? (
             <div>
               {totals && (
-                <div className="mt-3 mb-5 pb-5 flex flex-row border-b">
+                <div className="mt-3 mb-5 pb-5 flex flex-row border-b border-neutral-content">
                   <div className="font-bold ml-4 flex flex-row items-center w-40 p-5 text-sm border bg-base-200 rounded-xl justify-center">
                     <p className="mr-1">Total: </p>
                     <p>{formatterToken.format(totals.totalUsageInTokens)}</p>
@@ -264,7 +264,7 @@ export default function UsageTrend() {
           ) : (
             <div>
               {totals && (
-                <div className="mt-3 mb-5 pb-5 flex flex-row border-b">
+                <div className="mt-3 mb-5 pb-5 flex flex-row border-b border-neutral-content">
                   <div className="font-bold ml-4 flex flex-row items-center w-40 p-5 text-sm border bg-base-200 rounded-xl justify-center">
                     <p className="mr-1">Total: </p>
                     <p>
