@@ -39,7 +39,7 @@ export function MessageQuickActions({
     <div>
       {message.role === "assistant" ? (
         !isLoading && (
-          <div className="mt-4 text-sm border-t">
+          <div className="mt-4 text-sm border-t border-neutral-content">
             <div className="tooltip tooltip-bottom" data-tip="Copy">
               <button
                 onClick={handleCopy}
