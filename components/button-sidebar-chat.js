@@ -32,7 +32,7 @@ export default function ButtonSidebarChat({ c }) {
   };
 
   return (
-    <div className="relative z-20">
+    <div className="relative">
       <div className="w-full">
         <div
           className={`btn btn-sm w-full text-xs justify-between btn-ghost cursor-default ${
@@ -63,7 +63,7 @@ export default function ButtonSidebarChat({ c }) {
       {chatMenu === c.id && (
         <div className="w-full" onMouseLeave={() => leaveChatMenu()}>
           <motion.div
-            className="text-xs absolute top-8 z-20 right-0"
+            className="text-xs absolute top-8 right-0 z-50"
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 10 }}
@@ -88,7 +88,7 @@ export default function ButtonSidebarChat({ c }) {
                     <h3 className="font-bold text-lg">Rename the chat</h3>
                     <div className="divider"></div>
                     <p className="">
-                      <label className="input input-bordered flex items-center gap-2">
+                      <label className="input input-bordered flex items-center gap-2 mx-auto">
                         <PenLine size={16} />
                         <input
                           type="text"

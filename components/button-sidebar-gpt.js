@@ -51,7 +51,7 @@ export default function ButtonSidebarGPT({ gpt }) {
   };
 
   return (
-    <div className="relative z-500">
+    <div className="relative">
       <div
         className={`mb-1 mt-1 btn btn-sm btn-ghost no-animation w-full text-xs justify-between cursor-default ${
           gptMenu === gpt.id ? "bg-base-300" : ""
