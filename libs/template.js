@@ -81,4 +81,26 @@ This section summarizes the key points discussed in the document and provides fi
 1. [Reference 1 Title](https://example.com/reference1)
 2. [Reference 2 Title](https://example.com/reference2)
 3. [Reference 3 Title](https://example.com/reference3)
+
+## Tables
+Markdown supports basic tables using pipes ('|') to separate columns. You must use dashes ('-') 
+to define the header separator line. Each row should be placed on a new line. 
+Make sure to leave a blank line before and after the table for proper rendering.
+
+### Table Example
+
+| **Name** | **Age** | **City**    | **Country** | **Occupation** |
+|----------|--------:|-------------|-------------|----------------|
+| John     | 25      | New York    | USA         | Student        |
+| Alice    | 30      | London      | UK          | *Engineer*     |
+| **Bob**  | 35      | Paris       | France      | **Teacher**    |
+
+### Notes:
+- Columns are separated by '|'.
+- The second line ('---') defines the header.
+- Alignment can be set using colons:
+  - ':---' for left-align
+  - ':---:'' for center-align
+  - '---:' for right-align
+- You can use **bold** or *italic*
 `;

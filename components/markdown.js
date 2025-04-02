@@ -3,7 +3,6 @@ import React, { memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import rehypeSanitize from "rehype-sanitize";
 import { CodeBlock } from "./code-block";
 
 const components = {
@@ -106,7 +105,7 @@ const components = {
     return (
       <div className="overflow-x-auto">
         <table
-          className="table-auto border-collapse border border-base-300 w-full"
+          className="table-auto border-collapse border border-base-300 w-full my-2"
           {...props}
         >
           {children}
@@ -152,13 +151,14 @@ const components = {
 
 const remarkPlugins = [remarkGfm];
 
-const rehypePlugins = [rehypeRaw, rehypeSanitize];
+const rehypePlugins = [rehypeRaw];
 
 const NonMemoizedMarkdown = ({ children }) => {
+  console.log(children);
   return (
     <ReactMarkdown
       remarkPlugins={remarkPlugins}
-      rehypePlugins={rehypePlugins}
+      // rehypePlugins={rehypePlugins}
       components={components}
     >
       {children}
