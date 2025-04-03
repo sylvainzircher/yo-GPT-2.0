@@ -8,14 +8,6 @@ export const models = [
     api: "accounts/fireworks/models/deepseek-r1",
   },
   {
-    name: "deepseek-v3",
-    size: "671B parameters",
-    context: "160k",
-    price: "$1.20/M Token",
-    priceSimplified: 1.2,
-    api: "accounts/fireworks/models/deepseek-v3-0324",
-  },
-  {
     name: "Llama-3.3-405B",
     size: "410B parameters",
     context: "128k",

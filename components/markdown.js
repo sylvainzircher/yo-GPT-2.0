@@ -154,7 +154,6 @@ const remarkPlugins = [remarkGfm];
 const rehypePlugins = [rehypeRaw];
 
 const NonMemoizedMarkdown = ({ children }) => {
-  console.log(children);
   return (
     <ReactMarkdown
       remarkPlugins={remarkPlugins}
