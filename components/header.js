@@ -5,14 +5,11 @@ import ModelSelector from "./model-selector";
 import ModelSettings from "./model-settings";
 import ModelUsage from "./model-usage";
 import ThemeSwap from "./theme-swap";
-// import { useSWRConfig } from "swr";
 import { useSearchParams } from "next/navigation";
 
 export default function Header({ settings, setSettings, gpt }) {
   const searchParams = useSearchParams();
   const chatId = searchParams.get("id") || null;
-  // const { mutate } = useSWRConfig();
-  // mutate("/api/settings/");
 
   return (
     <AnimatePresence>

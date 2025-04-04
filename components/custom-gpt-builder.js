@@ -78,7 +78,7 @@ export default function CustomGptBuilder() {
   return (
     <div ref={gptBuilderRef}>
       <button
-        className={`btn btn-square text-sm flex flex-row align-middle p-2 items-center ml-2 ${
+        className={`btn btn-square text-sm flex flex-row align-middle p-2 items-center ${
           showModal ? "btn-active btn-ghost" : "btn-ghost"
         }`}
         onClick={toggleShowModal}

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PanelRightDashed, Plus } from "lucide-react";
+import { PanelRightDashed, Plus, Paperclip } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { isToday, isYesterday, subWeeks } from "date-fns";
 import ButtonSidebarChat from "@/components/button-sidebar-chat";
@@ -30,6 +30,10 @@ const Sidebar = () => {
 
   const handleClick = () => {
     window.location.href = "/";
+  };
+
+  const chatWithDoc = () => {
+    return;
   };
 
   const groupChatsByDate = (chats) => {
@@ -88,6 +92,12 @@ const Sidebar = () => {
                 <PanelRightDashed size={16} />
               </button>
               <div className="flex flex-row items-center">
+                <button
+                  className="btn btn-square btn-ghost"
+                  onClick={chatWithDoc}
+                >
+                  <Paperclip size={16} />
+                </button>
                 <CustomGptBuilder />
                 <button
                   className="btn btn-square btn-ghost"
@@ -164,6 +174,12 @@ const Sidebar = () => {
                 <PanelRightDashed size={16} />
               </button>
               <div className="flex flex-row items-center">
+                <button
+                  className="btn btn-square btn-ghost"
+                  onClick={chatWithDoc}
+                >
+                  <Paperclip size={16} />
+                </button>
                 <CustomGptBuilder />
                 <button
                   className="btn btn-square btn-ghost"

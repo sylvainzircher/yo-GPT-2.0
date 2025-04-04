@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 
 export default function ThemeSwap() {
-  //
   const [theme, setTheme] = useState(
     typeof window !== "undefined"
       ? localStorage.getItem("theme") || "light"
@@ -18,12 +17,10 @@ export default function ThemeSwap() {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
-  //
 
   return (
     <div>
       <label className="swap swap-rotate p-2 btn btn-square btn-ghost ml-2">
-        {/* <input type="checkbox" className="theme-controller" value="dark" /> */}
         <input
           type="checkbox"
           checked={theme === "dark"}

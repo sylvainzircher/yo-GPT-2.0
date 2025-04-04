@@ -4,10 +4,8 @@ import { CopyIcon, CheckIcon } from "lucide-react";
 
 export function CodeBlock({ inline, className, children, ...props }) {
   const [copied, setCopied] = useState(false);
-  // const match = /language-(\w+)/.exec(className || "");
-  // const language = match ? match[1] : null;
   const match = className ? className.match(/language-(\w+)/) : null;
-  const language = match ? match[1] : "plaintext"; // Default to "plaintext"
+  const language = match ? match[1] : "plaintext";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(String(children).trim());
