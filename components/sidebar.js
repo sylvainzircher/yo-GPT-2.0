@@ -6,6 +6,8 @@ import { isToday, isYesterday, subWeeks } from "date-fns";
 import ButtonSidebarChat from "@/components/button-sidebar-chat";
 import ButtonSidebarGPT from "./button-sidebar-gpt";
 import CustomGptBuilder from "./custom-gpt-builder";
+import DocumentLoader from "./document-loader";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 const Sidebar = () => {
@@ -17,6 +19,8 @@ const Sidebar = () => {
   const [myGPTs, setMyGPTs] = useState([]);
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+  const router = useRouter();
 
   const { data: chats } = useSWR("/api/get-chats/", fetcher, {
     revalidateOnFocus: true,
@@ -33,7 +37,7 @@ const Sidebar = () => {
   };
 
   const chatWithDoc = () => {
-    return;
+    router.push("/pdf");
   };
 
   const groupChatsByDate = (chats) => {
@@ -92,12 +96,7 @@ const Sidebar = () => {
                 <PanelRightDashed size={16} />
               </button>
               <div className="flex flex-row items-center">
-                <button
-                  className="btn btn-square btn-ghost"
-                  onClick={chatWithDoc}
-                >
-                  <Paperclip size={16} />
-                </button>
+                <DocumentLoader />
                 <CustomGptBuilder />
                 <button
                   className="btn btn-square btn-ghost"
@@ -174,12 +173,7 @@ const Sidebar = () => {
                 <PanelRightDashed size={16} />
               </button>
               <div className="flex flex-row items-center">
-                <button
-                  className="btn btn-square btn-ghost"
-                  onClick={chatWithDoc}
-                >
-                  <Paperclip size={16} />
-                </button>
+                <DocumentLoader />
                 <CustomGptBuilder />
                 <button
                   className="btn btn-square btn-ghost"
