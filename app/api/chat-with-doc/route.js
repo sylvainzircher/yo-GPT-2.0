@@ -3,7 +3,10 @@ import { createOpenAI } from "@ai-sdk/openai";
 import pdfParse from "pdf-parse";
 
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import { OpenAIEmbeddings } from "@langchain/openai";
+//////////////////////////////////////////////////////////////////
+// import { OpenAIEmbeddings } from "@langchain/openai";
+import { FastTextEmbeddings } from "@/libs/fasttext-embeddings";
+//////////////////////////////////////////////////////////////////
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 
 const fireworks = createOpenAI({
@@ -27,13 +30,6 @@ export async function POST(req) {
     })
     .filter(Boolean); // removes undefined entries
   let docs;
-
-  // check if user has sent a PDF
-  const messagesHavePDF = messages.some((message) =>
-    message.experimental_attachments?.some(
-      (a) => a.contentType === "application/pdf"
-    )
-  );
 
   for (const message of messages) {
     let attachment = message.experimental_attachments?.[0];
@@ -61,12 +57,18 @@ export async function POST(req) {
 
   const splits = await textSplitter.splitDocuments(docs);
 
+  //////////////////////////////////////////////////////////////////
+  // const vectorstore = await MemoryVectorStore.fromDocuments(
+  //   splits,
+  //   new OpenAIEmbeddings({
+  //     openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  //   })
+  // );
   const vectorstore = await MemoryVectorStore.fromDocuments(
     splits,
-    new OpenAIEmbeddings({
-      openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-    })
+    new FastTextEmbeddings()
   );
+  //////////////////////////////////////////////////////////////////
 
   // Only extract from top document
   const retriever = vectorstore.asRetriever({ k: 10 });

@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PanelRightDashed, Plus, Paperclip } from "lucide-react";
+import { PanelRightDashed, Plus } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { isToday, isYesterday, subWeeks } from "date-fns";
 import ButtonSidebarChat from "@/components/button-sidebar-chat";
 import ButtonSidebarGPT from "./button-sidebar-gpt";
 import CustomGptBuilder from "./custom-gpt-builder";
-import DocumentLoader from "./document-loader";
+import NewConversation from "./new-conversation";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
@@ -31,14 +31,6 @@ const Sidebar = () => {
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
   });
-
-  const handleClick = () => {
-    window.location.href = "/";
-  };
-
-  const chatWithDoc = () => {
-    router.push("/pdf");
-  };
 
   const groupChatsByDate = (chats) => {
     let today = [];
@@ -96,14 +88,8 @@ const Sidebar = () => {
                 <PanelRightDashed size={16} />
               </button>
               <div className="flex flex-row items-center">
-                <DocumentLoader />
                 <CustomGptBuilder />
-                <button
-                  className="btn btn-square btn-ghost"
-                  onClick={handleClick}
-                >
-                  <Plus size={16} />
-                </button>
+                <NewConversation />
               </div>
             </div>
             <div className="m-5 overflow-y-auto h-full">
@@ -173,14 +159,8 @@ const Sidebar = () => {
                 <PanelRightDashed size={16} />
               </button>
               <div className="flex flex-row items-center">
-                <DocumentLoader />
                 <CustomGptBuilder />
-                <button
-                  className="btn btn-square btn-ghost"
-                  onClick={handleClick}
-                >
-                  <Plus size={16} />
-                </button>
+                <NewConversation />
               </div>
             </div>
           </aside>

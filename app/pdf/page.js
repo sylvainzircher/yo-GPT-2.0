@@ -2,7 +2,6 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useRef, useState } from "react";
-import Image from "next/image";
 
 export default function chatWithDoc() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -18,33 +17,6 @@ export default function chatWithDoc() {
         <div key={m.id} className="whitespace-pre-wrap">
           {m.role === "user" ? "User: " : "AI: "}
           {m.content}
-          {/* <div>
-            {m?.experimental_attachments
-              ?.filter(
-                (attachment) =>
-                  attachment?.contentType?.startsWith("image/") ||
-                  attachment?.contentType?.startsWith("application/pdf")
-              )
-              .map((attachment, index) =>
-                attachment.contentType?.startsWith("image/") ? (
-                  <Image
-                    key={`${m.id}-${index}`}
-                    src={attachment.url}
-                    width={500}
-                    height={500}
-                    alt={attachment.name ?? `attachment-${index}`}
-                  />
-                ) : attachment.contentType?.startsWith("application/pdf") ? (
-                  <iframe
-                    key={`${m.id}-${index}`}
-                    src={attachment.url}
-                    width={500}
-                    height={600}
-                    title={attachment.name ?? `attachment-${index}`}
-                  />
-                ) : null
-              )}
-          </div> */}
         </div>
       ))}
 
