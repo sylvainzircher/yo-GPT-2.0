@@ -24,6 +24,7 @@ export default function MessageInput({
   messages,
   stop,
   gpt,
+  pdf,
 }) {
   const inputAreaRef = useRef(null);
   const [hasStarted, setHasStarted] = useState(false);
@@ -32,6 +33,8 @@ export default function MessageInput({
   const [totalUsageAmount, setTotalUsageAmount] = useState(0);
   const [gptRetrieved, setGptRetrieved] = useState([]);
   const { mutate } = useSWRConfig();
+  const [files, setFiles] = useState(undefined);
+  const fileInputRef = useRef(null);
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -76,8 +79,24 @@ export default function MessageInput({
   const handleKeyDown = async (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      handleFormSubmit(e);
       setHasStarted(true);
+    }
+  };
+
+  const handleFormSubmit = (event) => {
+    if (pdf) {
+      handleSubmit(event, {
+        experimental_attachments: files,
+      });
+
+      setFiles(undefined);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } else {
+      handleSubmit(event);
     }
   };
 
@@ -112,7 +131,7 @@ export default function MessageInput({
             )}
           </motion.div>
         )}
-        <form onSubmit={handleSubmit} className="w-3/4">
+        <form onSubmit={handleFormSubmit} className="w-3/4">
           <motion.div
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
             initial={{ opacity: 0, y: 10 }}
@@ -120,19 +139,51 @@ export default function MessageInput({
             exit={{ opacity: 0, y: 12 }}
           >
             <div className="flex flex-row items-center">
-              <div className="flex-col h-32 w-full mr-2 rounded-xl ">
-                <textarea
-                  name="prompt"
-                  ref={inputAreaRef}
-                  value={input}
-                  onChange={handleInputChange}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Type your question here..."
-                  type="text"
-                  className="textarea text-sm px-4 py-2 mx-auto h-full w-full bg-base-200 focus:outline-none focus:ring-1 focus:ring-neutral-500 rounded-xl resize-none"
-                  required
-                />
-              </div>
+              {!pdf ? (
+                <div className="flex-col h-32 w-full mr-2 rounded-xl">
+                  <textarea
+                    name="prompt"
+                    ref={inputAreaRef}
+                    value={input}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Type your question here..."
+                    type="text"
+                    className="textarea text-sm px-4 py-2 mx-auto h-full w-full bg-base-200 focus:outline-none focus:ring-1 focus:ring-neutral-500 rounded-xl resize-none"
+                    required
+                  />
+                </div>
+              ) : (
+                <div className="flex-col w-full mr-2 rounded-xl">
+                  <input
+                    type="file"
+                    className="file-input file-input-sm file-input-primary mb-2"
+                    onChange={(event) => {
+                      console.log(event.target.files);
+                      if (event.target.files && event.target.files.length > 0) {
+                        setFiles(event.target.files);
+                      }
+                    }}
+                    multiple
+                    ref={fileInputRef}
+                    required
+                    disabled={hasStarted}
+                  />
+                  <div>
+                    <textarea
+                      name="prompt"
+                      ref={inputAreaRef}
+                      value={input}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Type your question here..."
+                      type="text"
+                      className="textarea text-sm px-4 py-2 mx-auto h-32 w-full bg-base-200 focus:outline-none focus:ring-1 focus:ring-neutral-500 rounded-xl resize-none"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
               <div className="flex-col h-32 py-2">
                 <ButtonChat
                   setHasStarted={setHasStarted}

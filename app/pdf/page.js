@@ -1,57 +1,110 @@
 "use client";
-
-import { useChat } from "@ai-sdk/react";
-import { useRef, useState } from "react";
+import { useChat } from "ai/react";
+import React, { useRef, useState, useEffect } from "react";
+import Header from "@/components/header";
+import Chat from "@/components/chat";
+import Sidebar from "@/components/sidebar";
+import MessageInput from "@/components/message-input";
+import useSWR from "swr";
+import { toast } from "sonner";
 
 export default function chatWithDoc() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const [settings, setSettings] = useState({});
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [chatStarted, setChatStarted] = useState(false);
+
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { data } = useSWR("/api/settings/", fetcher);
+
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+    reload,
+    stop,
+  } = useChat({
     api: "/api/chat-with-doc",
+    body: {
+      model: settings.model,
+      temperature: settings.temperature,
+      maxTokens: settings.maxTokens,
+      autoTitle: settings.autoTitle,
+      autoSave: settings.autoSave,
+    },
+    onResponse: () => {
+      setIsStreaming(true);
+    },
+    onError: (error) => {
+      toast.error(`An error occurred: ${error.message}`);
+    },
+    onFinish: () => {
+      setIsStreaming(false);
+    },
   });
 
-  const [files, setFiles] = useState(undefined);
-  const fileInputRef = useRef(null);
+  useEffect(() => {
+    if (data) {
+      setSettings({
+        model: data.settings.model,
+        temperature: data.settings.temperature,
+        maxTokens: data.settings.maxTokens,
+        isReasoning: data.settings.model === "deepseek-r1" ? true : false,
+        autoSave: data.settings.autoSave,
+        autoTitle: data.settings.autoTitle,
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const originalError = console.error;
+    console.error = (...args) => {
+      if (
+        typeof args[0] === "string" &&
+        args[0].includes("<pre> cannot be a descendant of <p>")
+      ) {
+        // Suppress the hydration error about <pre> in <p>
+        return;
+      }
+      originalError(...args);
+    };
+    return () => {
+      console.error = originalError;
+    };
+  }, []);
 
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      {messages.map((m) => (
-        <div key={m.id} className="whitespace-pre-wrap">
-          {m.role === "user" ? "User: " : "AI: "}
-          {m.content}
+    <div className="h-screen flex flex-row">
+      <div className="flex flex-col">
+        <Sidebar />
+      </div>
+      <div className="h-screen h-full flex flex-col w-full">
+        <div className="overflow-y-scroll" id="scroller">
+          <Header settings={settings} setSettings={setSettings} />
+          <Chat
+            messages={messages}
+            isLoading={isLoading}
+            isStreaming={isStreaming}
+            reload={reload}
+            setMessages={setMessages}
+          />
         </div>
-      ))}
-
-      <form
-        className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl space-y-2"
-        onSubmit={(event) => {
-          handleSubmit(event, {
-            experimental_attachments: files,
-          });
-
-          setFiles(undefined);
-
-          if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-          }
-        }}
-      >
-        <input
-          type="file"
-          className=""
-          onChange={(event) => {
-            if (event.target.files) {
-              setFiles(event.target.files);
-            }
-          }}
-          multiple
-          ref={fileInputRef}
-        />
-        <input
-          className="w-full p-2"
-          value={input}
-          placeholder="Say something..."
-          onChange={handleInputChange}
-        />
-      </form>
+        <div className="flex flex-row flex-1 items-center bg-base-100 text-sm w-full mx-auto">
+          <MessageInput
+            input={input}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            settings={settings}
+            isLoading={isLoading}
+            chatLoaded={chatStarted}
+            messages={messages}
+            stop={stop}
+            pdf={true}
+          />
+        </div>
+      </div>
     </div>
   );
 }

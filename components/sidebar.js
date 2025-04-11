@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PanelRightDashed, Plus } from "lucide-react";
+import { PanelRightDashed } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { isToday, isYesterday, subWeeks } from "date-fns";
 import ButtonSidebarChat from "@/components/button-sidebar-chat";
