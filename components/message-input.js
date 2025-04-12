@@ -232,21 +232,32 @@ export default function MessageInput({
               </div>
             </div>
 
-            <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
-              <BotMessageSquare size={12} className="mr-1" />
-              {gptRetrieved.length > 0 ? gptRetrieved[0].model : settings.model}
-              <ThermometerSun size={12} className="ml-4 mr-1" />
-              {settings.temperature / 100}
-              <BookOpenText size={12} className="ml-4 mr-1" />
-              {Number(settings.maxTokens).toLocaleString()}
-              {usage && (
-                <>
-                  <Gauge size={12} className="ml-4 mr-1" />
-                  {Number(totalUsageTk).toLocaleString()} tokens -{" "}
-                  {totalUsageAmount.toFixed(5)}$
-                </>
-              )}
-            </div>
+            {pdf ? (
+              <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
+                <BotMessageSquare size={12} className="mr-1" />
+                {gptRetrieved.length > 0
+                  ? gptRetrieved[0].model
+                  : settings.model}
+              </div>
+            ) : (
+              <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
+                <BotMessageSquare size={12} className="mr-1" />
+                {gptRetrieved.length > 0
+                  ? gptRetrieved[0].model
+                  : settings.model}
+                <ThermometerSun size={12} className="ml-4 mr-1" />
+                {settings.temperature / 100}
+                <BookOpenText size={12} className="ml-4 mr-1" />
+                {Number(settings.maxTokens).toLocaleString()}
+                {usage && (
+                  <>
+                    <Gauge size={12} className="ml-4 mr-1" />
+                    {Number(totalUsageTk).toLocaleString()} tokens -{" "}
+                    {totalUsageAmount.toFixed(5)}$
+                  </>
+                )}
+              </div>
+            )}
             <p className="text-xs text-base-400 justify-center">
               This is an AI-powered assistant. Responses may not always be
               accurate.

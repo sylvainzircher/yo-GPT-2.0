@@ -1,6 +1,6 @@
 "use client";
 import { useChat } from "ai/react";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/header";
 import Chat from "@/components/chat";
 import Sidebar from "@/components/sidebar";

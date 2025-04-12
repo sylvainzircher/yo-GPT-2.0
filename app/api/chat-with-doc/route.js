@@ -1,12 +1,10 @@
-import { streamText } from "ai";
+import { streamText, extractReasoningMiddleware, wrapLanguageModel } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import pdfParse from "pdf-parse";
-
+import { models } from "@/data/models";
+import { saveUsage } from "@/libs/save-usage";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
-//////////////////////////////////////////////////////////////////
-// import { OpenAIEmbeddings } from "@langchain/openai";
 import { FastTextEmbeddings } from "@/libs/fasttext-embeddings";
-//////////////////////////////////////////////////////////////////
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 
 const fireworks = createOpenAI({
@@ -17,7 +15,7 @@ const fireworks = createOpenAI({
 export const maxDuration = 30;
 
 export async function POST(req) {
-  const { messages } = await req.json();
+  const { messages, model, uid } = await req.json();
   const cleanedMessages = messages
     .map(({ role, content }) => {
       if (role !== "System") {
@@ -57,18 +55,10 @@ export async function POST(req) {
 
   const splits = await textSplitter.splitDocuments(docs);
 
-  //////////////////////////////////////////////////////////////////
-  // const vectorstore = await MemoryVectorStore.fromDocuments(
-  //   splits,
-  //   new OpenAIEmbeddings({
-  //     openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  //   })
-  // );
   const vectorstore = await MemoryVectorStore.fromDocuments(
     splits,
     new FastTextEmbeddings()
   );
-  //////////////////////////////////////////////////////////////////
 
   // Only extract from top document
   const retriever = vectorstore.asRetriever({ k: 10 });
@@ -94,9 +84,30 @@ export async function POST(req) {
     content: `Use the following pieces of retrieved context to answer the question. If you don't know the answer, say that you don't know. PLEASE OUTPUT THE RESULT IN A MARKDOWN FORMAT.`,
   });
 
+  const model_ = models.find((m) => m.name === model);
+  const modelApi = model_
+    ? model_.api
+    : "accounts/fireworks/models/llama-v3p3-70b-instruct";
+
   const stream = streamText({
-    model: fireworks("accounts/fireworks/models/llama-v3p3-70b-instruct"),
+    model:
+      modelApi === "accounts/fireworks/models/deepseek-r1"
+        ? wrapLanguageModel({
+            model: fireworks(modelApi),
+            middleware: extractReasoningMiddleware({ tagName: "think" }),
+          })
+        : fireworks(modelApi),
     messages: cleanedMessages,
+    async onFinish({ usage }) {
+      await saveUsage({
+        uid: crypto.randomUUID(),
+        type: "Chat",
+        promptTokens: usage.promptTokens,
+        completionTokens: usage.completionTokens,
+        nbTokens: usage.totalTokens,
+        modelName: model,
+      });
+    },
   });
 
   return stream.toDataStreamResponse();
