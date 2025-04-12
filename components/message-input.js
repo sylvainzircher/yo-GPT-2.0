@@ -34,6 +34,7 @@ export default function MessageInput({
   const [gptRetrieved, setGptRetrieved] = useState([]);
   const { mutate } = useSWRConfig();
   const [files, setFiles] = useState(undefined);
+  const [fileName, setFileName] = useState();
   const fileInputRef = useRef(null);
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -79,8 +80,10 @@ export default function MessageInput({
   const handleKeyDown = async (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleFormSubmit(e);
-      setHasStarted(true);
+      if (input.trim().length > 0) {
+        handleFormSubmit(e);
+        setHasStarted(true);
+      }
     }
   };
 
@@ -90,6 +93,9 @@ export default function MessageInput({
         experimental_attachments: files,
       });
 
+      if (files) {
+        setFileName(files[0]?.name);
+      }
       setFiles(undefined);
 
       if (fileInputRef.current) {
@@ -155,20 +161,23 @@ export default function MessageInput({
                 </div>
               ) : (
                 <div className="flex-col w-full mr-2 rounded-xl">
-                  <input
-                    type="file"
-                    className="file-input file-input-sm file-input-primary mb-2"
-                    onChange={(event) => {
-                      console.log(event.target.files);
-                      if (event.target.files && event.target.files.length > 0) {
-                        setFiles(event.target.files);
-                      }
-                    }}
-                    multiple
-                    ref={fileInputRef}
-                    required
-                    disabled={hasStarted}
-                  />
+                  {messages.length == 0 && (
+                    <input
+                      type="file"
+                      className="file-input file-input-sm file-input-primary mb-2"
+                      onChange={(event) => {
+                        if (
+                          event.target.files &&
+                          event.target.files.length > 0
+                        ) {
+                          setFiles(event.target.files);
+                        }
+                      }}
+                      // multiple
+                      ref={fileInputRef}
+                      required
+                    />
+                  )}
                   <div>
                     <textarea
                       name="prompt"
@@ -233,11 +242,16 @@ export default function MessageInput({
             </div>
 
             {pdf ? (
-              <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
-                <BotMessageSquare size={12} className="mr-1" />
-                {gptRetrieved.length > 0
-                  ? gptRetrieved[0].model
-                  : settings.model}
+              <div className="flex flex-row items-center justify-center">
+                <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
+                  <BotMessageSquare size={12} className="mr-1" />
+                  {gptRetrieved.length > 0
+                    ? gptRetrieved[0].model
+                    : settings.model}
+                </div>
+                <div>
+                  {fileName && <p className="text-xs ml-2">{fileName}</p>}
+                </div>
               </div>
             ) : (
               <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
