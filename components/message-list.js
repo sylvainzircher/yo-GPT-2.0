@@ -14,6 +14,7 @@ export function MessageList({
   reload,
   setMessages,
   gpt,
+  pdf,
 }) {
   const searchParams = useSearchParams();
   const uid = searchParams.get("id") || null;
@@ -127,6 +128,7 @@ export function MessageList({
                         <Message
                           message={m}
                           isLoading={isLoading && messages.length - 1 === index}
+                          pdf={pdf}
                         />
                       )}
                       <MessageQuickActions
@@ -138,6 +140,12 @@ export function MessageList({
                       />
                     </div>
                   </div>
+                </div>
+              )}
+              {pdf && isLoading && messages.length - 1 === index + 1 && (
+                <div className="text-xs text-gray-500 italic pb-2 flex flex-row">
+                  <p>Retrieving the context from the document</p>
+                  <span className="loading loading-dots loading-xs ml-2"></span>
                 </div>
               )}
               <div

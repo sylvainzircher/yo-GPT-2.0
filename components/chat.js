@@ -9,6 +9,7 @@ export default function Chat({
   reload,
   setMessages,
   gpt,
+  pdf,
 }) {
   return (
     <div className="w-full flex flex-col">
@@ -20,6 +21,7 @@ export default function Chat({
         reload={reload}
         setMessages={setMessages}
         gpt={gpt}
+        pdf={pdf}
       />
     </div>
   );

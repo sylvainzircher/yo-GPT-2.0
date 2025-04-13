@@ -33,10 +33,14 @@ export function MessageReasoning({ message, isLoading }) {
   );
 }
 
-export function Message({ message, isLoading }) {
+export function Message({ message, isLoading, pdf }) {
   return (
     <div>
-      {isLoading ? (
+      {pdf ? (
+        <div className="mt-5">
+          <Markdown>{message.content}</Markdown>
+        </div>
+      ) : isLoading ? (
         <div className="flex flex-row items-center">
           <span className="loading loading-dots loading-sm"></span>
         </div>

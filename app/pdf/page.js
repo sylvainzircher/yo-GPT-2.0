@@ -89,6 +89,7 @@ export default function chatWithDoc() {
             isStreaming={isStreaming}
             reload={reload}
             setMessages={setMessages}
+            pdf={true}
           />
         </div>
         <div className="flex flex-row flex-1 items-center bg-base-100 text-sm w-full mx-auto">
