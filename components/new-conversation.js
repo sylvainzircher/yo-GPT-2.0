@@ -12,7 +12,7 @@ export default function CustomGptBuilder() {
   };
 
   const chatWithDoc = () => {
-    router.push("/pdf");
+    window.location.href = "/pdf";
   };
 
   const toggleShowModal = () => {
