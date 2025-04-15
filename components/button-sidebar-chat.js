@@ -38,11 +38,16 @@ export default function ButtonSidebarChat({ c }) {
           className={`btn btn-sm w-full text-xs justify-between btn-ghost cursor-default ${
             chatMenu === c.id ? "bg-base-300" : ""
           }`}
-          onClick={() => handleChatClick(c.id)}
+          // onClick={() => handleChatClick(c.id)}
           onMouseEnter={() => setHoveredChat(c.id)}
           onMouseLeave={() => (chatMenu === c.id ? null : setHoveredChat(null))}
         >
-          <p className="text-left w-3/4 truncate">{c.title}</p>
+          <p
+            className="text-left w-3/4 truncate cursor-pointer"
+            onClick={() => handleChatClick(c.id)}
+          >
+            {c.title}
+          </p>
           <AnimatePresence>
             {hoveredChat === c.id && (
               <motion.div
