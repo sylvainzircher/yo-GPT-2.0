@@ -43,6 +43,9 @@ export default function GenerateImage() {
         form.append("init_image", file);
       }
 
+      form.append("cfg_scale", settings.cfgScale);
+      form.append("image_strength", settings.imageStrength);
+
       const response = await fetch("/api/generate-image", {
         method: "POST",
         body: form,
@@ -113,7 +116,7 @@ export default function GenerateImage() {
                 alt="Generated"
                 className="m-1 w-16 h-16 rounded-xl border"
               />
-              <p className="text-xs text-gray-300"> Previous generated image</p>
+              <p className="text-xs text-gray-300"> Control image</p>
             </div>
           )}
           {imageSrc ? (

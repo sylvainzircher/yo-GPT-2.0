@@ -6,6 +6,8 @@ export async function POST(req) {
 
     const prompt = formData.get("prompt");
     const initImage = formData.get("init_image");
+    const cfgScale = formData.get("cfg_scale");
+    const imageStrength = formData.get("image_strength");
 
     if (!prompt) {
       return NextResponse.json(
@@ -33,8 +35,11 @@ export async function POST(req) {
     }
 
     fireworksForm.append("init_image_mode", "IMAGE_STRENGTH");
-    fireworksForm.append("image_strength", 0.2);
-    fireworksForm.append("cfg_scale", 10);
+    fireworksForm.append(
+      "image_strength",
+      imageStrength ? Number(imageStrength) / 100 : 20
+    );
+    fireworksForm.append("cfg_scale", cfgScale ? Number(cfgScale) : 0.7);
     fireworksForm.append("seed", String(Math.floor(Math.random() * 100000)));
     fireworksForm.append("steps", 100);
     fireworksForm.append("safety_check", "true");

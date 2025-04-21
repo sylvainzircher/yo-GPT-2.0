@@ -94,7 +94,7 @@ export default function ModelImageSettings({ settings, setSettings }) {
                   <div className="flex flex-row items-center mt-4">
                     <div
                       className="tooltip tooltip-left"
-                      data-tip="This tells the model how strongly it should stick to the input image when generating a new one from a prompt. Creativity / Prompt Freedom (0.1–0.4) | Original Image Fidelity (0.7–1.0)."
+                      data-tip="This tells the model how strongly it should stick to the input image when generating a new one from a prompt. Creativity / Prompt Freedom (10 – 40) | Original Image Fidelity (70 – 100)."
                     >
                       <BadgeInfo size={14} className="text-primary mr-2" />
                     </div>
