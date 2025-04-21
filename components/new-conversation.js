@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Plus, Bot, Paperclip, Brush } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function CustomGptBuilder() {
+export default function NewConversation() {
   const [showModal, setShowModal] = useState(false);
   const documentUploaderRef = useRef(null);
   const router = useRouter();
