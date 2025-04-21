@@ -7,80 +7,56 @@ export default function ModelImageSettings({ settings, setSettings }) {
   const [showModelSettings, setShowModelSettings] = useState(false);
   const [imageStrength, setImageStrength] = useState(20);
   const [cfgScale, setCfgScale] = useState(7);
-  // const [maxTokens, setMaxTokens] = useState(1200);
-  // const [autoTitle, setAutoTitle] = useState(true);
   const modelSettingsRef = useRef(null);
   const { mutate } = useSWRConfig();
 
-  // useEffect(() => {
-  //   setTemperature(settings.temperature);
-  //   setAutoSave(settings.autoSave);
-  //   setAutoTitle(settings.autoTitle);
-  //   setMaxTokens(settings.maxTokens);
-  // }, [settings]);
+  useEffect(() => {
+    setImageStrength(settings.imageStrength);
+    setCfgScale(settings.cfgScale);
+  }, [settings]);
 
-  // const updateModelSettings = async (type, value) => {
-  //   try {
-  //     const response = await fetch("/api/settings", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ type: type, value: value }),
-  //     });
-  //     const data = await response.json();
-  //     if (type === "temperature") {
-  //       setSettings((prevSettings) => ({
-  //         ...prevSettings,
-  //         temperature: value,
-  //       }));
-  //       console.log("Model temperature updated");
-  //     }
-  //     if (type === "maxTokens") {
-  //       setSettings((prevSettings) => ({
-  //         ...prevSettings,
-  //         maxTokens: value,
-  //       }));
-  //       console.log("Model maxTokens updated");
-  //     }
-  //     if (type === "autoSave") {
-  //       console.log("Auto save");
-  //       setSettings((prevSettings) => ({
-  //         ...prevSettings,
-  //         autoSave: value,
-  //       }));
-  //       console.log("Autosave setting updated");
-  //     }
-  //     if (type === "autoTitle") {
-  //       console.log("Auto Title");
-  //       setSettings((prevSettings) => ({
-  //         ...prevSettings,
-  //         autoTitle: value,
-  //       }));
-  //       console.log("Autosave setting updated");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating model temperature:", error);
-  //   }
-  // };
+  const updateModelSettings = async (type, value) => {
+    try {
+      const response = await fetch("/api/imageSettings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: type, value: value }),
+      });
+      const data = await response.json();
+      if (type === "imageStrength") {
+        setSettings((prevSettings) => ({
+          ...prevSettings,
+          imageStrength: value,
+        }));
+      }
+      if (type === "cfgScale") {
+        setSettings((prevSettings) => ({
+          ...prevSettings,
+          cfgScale: value,
+        }));
+      }
+    } catch (error) {
+      console.error("Error updating model settings:", error);
+    }
+  };
 
   const toggleShowModelSettings = () => {
     setShowModelSettings(!showModelSettings);
   };
 
-  // const settingsSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await Promise.all([
-  //       // updateModelSettings("imageStrength", imageStrength),
-  //       // updateModelSettings("maxTokens", maxTokens),
-  //       // updateModelSettings("autoSave", autoSave),
-  //       // updateModelSettings("autoTitle", autoTitle),
-  //     ]);
-  //     // mutate("/api/settings/");
-  //     setShowModelSettings(false);
-  //   } catch (error) {
-  //     console.error("Failed to update settings:", error);
-  //   }
-  // };
+  const settingsSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await Promise.all([
+        updateModelSettings("imageStrength", imageStrength),
+        updateModelSettings("cfgScale", cfgScale),
+      ]);
+      mutate("/api/imageSettings/");
+      setShowModelSettings(false);
+    } catch (error) {
+      console.error("Failed to update settings:", error);
+    }
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {

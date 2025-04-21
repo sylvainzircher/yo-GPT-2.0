@@ -2,16 +2,30 @@
 import React, { useState, useRef, useEffect } from "react";
 import HeaderImageGeneration from "@/components/header-img-generation";
 import { Download, Paintbrush, Eraser, Replace } from "lucide-react";
+import useSWR, { useSWRConfig } from "swr";
 
 export default function GenerateImage() {
+  const [settings, setSettings] = useState({});
   const [prompt, setPrompt] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
   const [loading, setLoading] = useState(false);
   const [imageBlob, setImageBlob] = useState(null);
   const [previousImageURL, setPreviousImageURL] = useState(null);
-  const [uploadFile, setUploadFile] = useState(null);
+  const { mutate } = useSWRConfig();
+
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { data } = useSWR("/api/imageSettings/", fetcher);
 
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (data) {
+      setSettings({
+        imageStrength: data.settings.imageStrength,
+        cfgScale: data.settings.cfgScale,
+      });
+    }
+  }, [data]);
 
   const handleGenerate = async () => {
     setLoading(true);
@@ -76,7 +90,6 @@ export default function GenerateImage() {
     setPreviousImageURL(null);
     setImageSrc(null);
     setImageBlob(null);
-    setUploadFile(null);
   };
 
   useEffect(() => {
@@ -91,7 +104,7 @@ export default function GenerateImage() {
   return (
     <div className="h-screen flex flex-row">
       <div className="h-screen h-full flex flex-col w-full justify-between">
-        <HeaderImageGeneration />
+        <HeaderImageGeneration settings={settings} setSettings={setSettings} />
         <div className="flex flex-col mx-auto mb-4">
           {previousImageURL && !loading && (
             <div className="flex flex-col mx-auto w-full">

@@ -21,8 +21,7 @@ export default function HeaderImageGeneration({ settings, setSettings }) {
         >
           <div className="flex flex-row">
             <NewConversation />
-            {/* <ModelImageSettings settings={settings} setSettings={setSettings} /> */}
-            <ModelImageSettings />
+            <ModelImageSettings settings={settings} setSettings={setSettings} />
             {/* <ModelUsage /> */}
             <ThemeSwap />
           </div>
