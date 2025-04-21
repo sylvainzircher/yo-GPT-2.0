@@ -129,49 +129,53 @@ export default function ButtonSidebarGPT({ gpt }) {
                             <option key={index}>{model.name}</option>
                           ))}
                       </select>
-                      <label className="form-control w-full">
-                        <div className="label">
-                          <span className="label-text">Name</span>
-                        </div>
-                        <input
-                          name="name"
-                          type="text"
-                          value={gptData.name}
-                          onChange={handleChange}
-                          placeholder={gpt.name}
-                          className="input w-full input-bordered input-sm mb-2"
-                        />
-                      </label>
-                      <label className="form-control w-full">
-                        <div className="label">
-                          <span className="label-text">Short Description</span>
-                        </div>
-                        <input
-                          type="text"
-                          name="description"
-                          value={gptData.description}
-                          onChange={handleChange}
-                          placeholder={gpt.description}
-                          className="input w-full input-bordered input-sm mb-2"
-                        />
-                      </label>
-                      <label className="form-control w-full">
-                        <div className="label">
-                          <span className="label-text">
-                            Fully detailled instructions
-                          </span>
-                        </div>
-                        <textarea
-                          name="instructions"
-                          value={gptData.instructions}
-                          onChange={handleChange}
-                          placeholder={gpt.instructions}
-                          type="text"
-                          className="text-sm mt-2 mx-auto h-32 w-full border input-sm input-bordered rounded-xl p-2"
-                        />
-                      </label>
+                      <div className="flex flex-col text-sm text-left mt-4">
+                        <label className="form-control w-full">
+                          <div className="label">
+                            <span className="label-text ml-1">Name</span>
+                          </div>
+                          <input
+                            name="name"
+                            type="text"
+                            value={gptData.name}
+                            onChange={handleChange}
+                            placeholder={gpt.name}
+                            className="input w-full input-bordered input-sm mb-2"
+                          />
+                        </label>
+                        <label className="form-control w-full mt-4">
+                          <div className="label">
+                            <span className="label-text ml-1">
+                              Short Description
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            name="description"
+                            value={gptData.description}
+                            onChange={handleChange}
+                            placeholder={gpt.description}
+                            className="input w-full input-bordered input-sm mb-2"
+                          />
+                        </label>
+                        <label className="form-control w-full mt-4">
+                          <div className="label">
+                            <span className="label-text ml-1">
+                              Fully detailled instructions
+                            </span>
+                          </div>
+                          <textarea
+                            name="instructions"
+                            value={gptData.instructions}
+                            onChange={handleChange}
+                            placeholder={gpt.instructions}
+                            type="text"
+                            className="mx-auto h-32 w-full textarea input-sm rounded-sm p-2"
+                          />
+                        </label>
+                      </div>
                       <div className="modal-action w-full justify-center">
-                        <button className="btn btn-sm btn-outline mr-2">
+                        <button className="btn btn-sm btn-primary mr-2">
                           Edit
                         </button>
                         <button
@@ -221,11 +225,11 @@ export default function ButtonSidebarGPT({ gpt }) {
                     <div className="modal-action w-full justify-center">
                       <button
                         className="btn btn-sm btn-outline btn-error mr-2"
-                        onClick={() => {
+                        onClick={async () => {
                           deleteGPTById(gpt.id);
-                          document.getElementById("delete_gpt").close();
-                          window.location.href = "/";
+                          await document.getElementById("delete_gpt").close();
                           toast.success(`${gpt.name} successfully deleted`);
+                          window.location.href = "/";
                         }}
                       >
                         Delete

@@ -158,7 +158,7 @@ export async function POST(req) {
   `
         : `
   You are a friendly assistant.  
-  Be polite, clear, and concise.
+  Be polite, clear, and as detailed as possible.
   `) +
       `📌 **Formatting Requirement:**  
   Please output your answer in **Markdown** format.  

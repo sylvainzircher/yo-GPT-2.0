@@ -1,5 +1,5 @@
 {
-  "model": "Llama-3.3-70B",
+  "model": "deepseek-r1",
   "temperature": "80",
   "maxTokens": 60000,
   "autoSave": true,

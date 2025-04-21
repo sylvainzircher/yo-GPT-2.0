@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Plus, Bot, Paperclip } from "lucide-react";
+import { Plus, Bot, Paperclip, Brush } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function CustomGptBuilder() {
@@ -13,6 +13,10 @@ export default function CustomGptBuilder() {
 
   const chatWithDoc = () => {
     window.location.href = "/pdf";
+  };
+
+  const generateImage = () => {
+    window.location.href = "/i";
   };
 
   const toggleShowModal = () => {
@@ -59,6 +63,12 @@ export default function CustomGptBuilder() {
               </button>
               <button className="btn btn-sm text-xs ml-5" onClick={chatWithDoc}>
                 <Paperclip size={16} /> Chat to a document
+              </button>
+              <button
+                className="btn btn-sm text-xs ml-5"
+                onClick={generateImage}
+              >
+                <Brush size={16} /> Generate Image
               </button>
             </div>
           </div>

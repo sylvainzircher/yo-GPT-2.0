@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { deleteChatsById } from "@/libs/delete-chat";
 import { renameChat } from "@/libs/rename-chat";
 import { useSWRConfig } from "swr";
+import { toast } from "sonner";
 
 export default function ButtonSidebarChat({ c }) {
   const [hoveredChat, setHoveredChat] = useState(null);
@@ -106,7 +107,7 @@ export default function ButtonSidebarChat({ c }) {
                     </p>
                     <div className="modal-action w-full justify-center">
                       <button
-                        className="btn btn-sm btn-outline btn-success mr-2"
+                        className="btn btn-sm btn-primary mr-2"
                         onClick={async () => {
                           await renameChat(c.id, newTitle);
                           document.getElementById("rename_chat").close();
@@ -152,10 +153,11 @@ export default function ButtonSidebarChat({ c }) {
                     <div className="modal-action w-full justify-center">
                       <button
                         className="btn btn-sm btn-outline btn-error mr-2"
-                        onClick={() => {
+                        onClick={async () => {
                           deleteChatsById(c.id);
-                          document.getElementById("delete_chat").close();
-                          window.location.href = "/";
+                          await document.getElementById("delete_chat").close();
+                          toast.success(`${c.title} successfully deleted`);
+                          mutate("/api/get-chats/");
                         }}
                       >
                         Delete
