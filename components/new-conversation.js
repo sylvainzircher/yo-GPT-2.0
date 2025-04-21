@@ -65,7 +65,7 @@ export default function CustomGptBuilder() {
                 <Paperclip size={16} /> Chat to a document
               </button>
               <button
-                className="btn btn-sm text-xs ml-5"
+                className="btn btn-sm btn-secondary text-xs ml-5"
                 onClick={generateImage}
               >
                 <Brush size={16} /> Generate Image
