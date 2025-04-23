@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import NewConversation from "./new-conversation";
 import ModelImageSettings from "./model-image-settings";
 import ModelUsage from "@/components/model-imagegen-usage";
+import PromptLibrary from "@/components/prompt-library";
 import ThemeSwap from "./theme-swap";
 import { useSearchParams } from "next/navigation";
 
@@ -23,6 +24,7 @@ export default function HeaderImageGeneration({ settings, setSettings }) {
             <NewConversation />
             <ModelImageSettings settings={settings} setSettings={setSettings} />
             <ModelUsage />
+            <PromptLibrary />
             <ThemeSwap />
           </div>
         </motion.div>
