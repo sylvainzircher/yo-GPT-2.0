@@ -67,7 +67,9 @@ export default function PromptLibrary() {
                 {copied === text ? (
                   <CheckIcon size={12} />
                 ) : (
-                  <CopyIcon size={12} />
+                  <div className="tooltip" data-tip="Copy">
+                    <CopyIcon size={12} />
+                  </div>
                 )}
               </button>
             </div>
