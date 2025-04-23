@@ -3,7 +3,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import NewConversation from "./new-conversation";
 import ModelImageSettings from "./model-image-settings";
-import ModelUsage from "./model-usage";
+import ModelUsage from "@/components/model-imagegen-usage";
 import ThemeSwap from "./theme-swap";
 import { useSearchParams } from "next/navigation";
 
@@ -22,7 +22,7 @@ export default function HeaderImageGeneration({ settings, setSettings }) {
           <div className="flex flex-row">
             <NewConversation />
             <ModelImageSettings settings={settings} setSettings={setSettings} />
-            {/* <ModelUsage /> */}
+            <ModelUsage />
             <ThemeSwap />
           </div>
         </motion.div>

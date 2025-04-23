@@ -1,7 +1,7 @@
 "use server";
 import { initializeDB } from "./create-usage-imagegendb";
 
-export async function getImageGenUsageDailyl() {
+export async function getImageGenUsageDaily() {
   const db = await initializeDB();
   db.read();
 
