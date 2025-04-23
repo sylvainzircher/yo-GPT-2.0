@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
+import { saveImageGenUsage } from "@/libs/save-usage-imagegen";
 
 export async function POST(req) {
+  const cost_per_step = 0.00013;
+  let cost;
+
   try {
     const formData = await req.formData();
 
@@ -8,6 +12,7 @@ export async function POST(req) {
     const initImage = formData.get("init_image");
     const cfgScale = formData.get("cfg_scale");
     const imageStrength = formData.get("image_strength");
+    const imageID = formData.get("uid");
 
     if (!prompt) {
       return NextResponse.json(
@@ -71,6 +76,18 @@ export async function POST(req) {
           body: JSON.stringify({ prompt }),
         }
       );
+    }
+
+    const billingHeader = response.headers.get("x-billing-information");
+    if (billingHeader) {
+      const billing = JSON.parse(billingHeader);
+      cost = cost_per_step * Number(billing.num_steps);
+
+      await saveImageGenUsage({
+        uid: imageID,
+        steps: billing.num_steps,
+        cost: cost,
+      });
     }
 
     if (!response.ok) {
