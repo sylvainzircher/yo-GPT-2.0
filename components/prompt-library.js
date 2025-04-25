@@ -56,10 +56,10 @@ export default function PromptLibrary() {
           <p className="font-bold text-md m-3">Some prompt examples:</p>
           {prompts.map((text, index) => (
             <div
-              className="border-t border-neutral-content flex flex-row items-center hover:bg-base-200 "
+              className="border-t border-neutral-content flex flex-row items-center "
               key={index}
             >
-              <p className="text-xs p-4 hover:bg-gray-100">{text}</p>
+              <p className="text-xs p-4">{text}</p>
               <button
                 onClick={() => handleCopy(text)}
                 className="flex items-center transition p-2 mt-2 mr-2 rounded-lg cursor-pointer"

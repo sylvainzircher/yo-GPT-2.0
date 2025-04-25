@@ -13,7 +13,7 @@ export default function HeaderImageGeneration({ settings, setSettings }) {
 
   return (
     <AnimatePresence>
-      <div className="z-50 flex sticky top-0 bg-base-100 p-3 mb-10 mx-auto">
+      <div className="z-50 flex sticky top-0 bg-base-100 mt-4 mb-4 mx-auto">
         <motion.div
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
           initial={{ opacity: 0, y: -10 }}

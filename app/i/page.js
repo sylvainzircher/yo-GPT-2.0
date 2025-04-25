@@ -150,7 +150,7 @@ export default function GenerateImage() {
                 <img
                   src={imageSrc}
                   alt="Generated"
-                  className="w-72 mt-4 rounded-xl border"
+                  className="w-84 mt-4 rounded-xl border"
                 />
                 <div className="tooltip tooltip-left" data-tip="Download">
                   <button

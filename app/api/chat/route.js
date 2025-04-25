@@ -140,7 +140,9 @@ export async function POST(req) {
   }
 
   try {
-    const model_ = models.find((m) => m.name === model);
+    const model_ = gpt
+      ? models.find((m) => m.name === gpt.model)
+      : models.find((m) => m.name === model);
     const modelApi = model_
       ? model_.api
       : "accounts/fireworks/models/llama-v3p3-70b-instruct";
