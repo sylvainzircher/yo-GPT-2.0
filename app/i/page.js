@@ -150,7 +150,7 @@ export default function GenerateImage() {
                 <img
                   src={imageSrc}
                   alt="Generated"
-                  className="w-84 mt-4 rounded-xl border"
+                  className="w-80 mt-4 rounded-xl border"
                 />
                 <div className="tooltip tooltip-left" data-tip="Download">
                   <button
@@ -194,7 +194,7 @@ export default function GenerateImage() {
                   placeholder="Type your prompt here... for example: A golden retriever wearing round glasses and a bow tie, sitting in a cozy library with a cup of coffee, soft lighting, photorealistic"
                   className="textarea textarea-bordered w-full h-24 mb-1"
                 />
-                <div className="flex flex-row mx-auto mb-4 text-xs">
+                <div className="flex flex-row mx-auto mb-2 text-xs">
                   <p className="mr-1 flex flex-row items-center">
                     <NotebookText size={12} className="ml-4 mr-1" />
                     Cfg Scale: {settings.cfgScale}
@@ -208,7 +208,7 @@ export default function GenerateImage() {
                     Cost: ${usageCost}
                   </p>
                 </div>
-                <div className="flex flex-row mx-auto mb-4">
+                <div className="flex flex-row mx-auto mb-2">
                   <button
                     onClick={handleGenerate}
                     className="btn btn-sm btn-primary w-fit"
