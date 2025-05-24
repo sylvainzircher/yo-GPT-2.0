@@ -1,5 +1,5 @@
 {
-  "model": "Llama-3.3-70B",
+  "model": "Llama-3.3-405B",
   "temperature": "80",
   "maxTokens": 60000,
   "autoSave": true,

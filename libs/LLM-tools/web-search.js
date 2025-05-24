@@ -25,7 +25,6 @@ export const searchWebTool = tool({
   }),
   execute: async ({ query }) => {
     const searchResult = await performWebSearch(query);
-    console.log("Search: " + searchResult);
     return searchResult;
   },
 });

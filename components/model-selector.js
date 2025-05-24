@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Globe } from "lucide-react";
 import { models } from "@/data/models";
 import { useSWRConfig } from "swr";
 
@@ -75,8 +75,13 @@ export default function ModelSelector({ settings, setSettings }) {
                   <div className="flex flex-col justify-start">
                     <span className="label-text">
                       <p className="font-bold">{model.name}</p>
-                      <p className="text-xs">
+                      <p className="text-xs flex flex-row">
                         {model.price} | {model.size}
+                        {model.name.toLowerCase().includes("llama") && (
+                          <div className="flex flex-row items-center">
+                            <Globe size={12} className="mr-1 ml-2" />
+                          </div>
+                        )}
                       </p>
                     </span>
                   </div>

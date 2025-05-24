@@ -4,6 +4,7 @@ import {
   ThermometerSun,
   BookOpenText,
   Gauge,
+  Globe,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import ButtonChat from "./button-chat";
@@ -255,6 +256,13 @@ export default function MessageInput({
               </div>
             ) : (
               <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
+                {gptRetrieved.length > 0
+                  ? gptRetrieved[0].model.toLowerCase().includes("llama")
+                  : settings.model?.toLowerCase().includes("llama") && (
+                      <div className="flex flex-row items-center justify-center mr-4">
+                        <Globe size={12} className="mr-1" /> Web Search
+                      </div>
+                    )}
                 <BotMessageSquare size={12} className="mr-1" />
                 {gptRetrieved.length > 0
                   ? gptRetrieved[0].model
