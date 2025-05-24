@@ -1,5 +1,5 @@
 {
-  "model": "Llama-3.3-405B",
+  "model": "mixtral-8x22b",
   "temperature": "80",
   "maxTokens": 60000,
   "autoSave": true,
