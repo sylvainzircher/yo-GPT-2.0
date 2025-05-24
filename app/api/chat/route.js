@@ -7,6 +7,7 @@ import { saveMessage } from "@/libs/save-message";
 import { saveUsage } from "@/libs/save-usage";
 import { replaceMessage } from "@/libs/replace-message";
 import { getMessagesById } from "@/libs/get-messages-by-id";
+import { searchWebTool } from "@/libs/LLM-tools/web-search";
 
 const fireworks = createOpenAI({
   apiKey: process.env.NEXT_PUBLIC_FIREWORKS_API_KEY ?? "",
@@ -147,25 +148,34 @@ export async function POST(req) {
       ? model_.api
       : "accounts/fireworks/models/llama-v3p3-70b-instruct";
 
+    //
+    const supportsTools = modelApi.includes("llama-v3");
+    //
+
     const systemPrompt =
       (gpt
         ? `
-  You are a specialized assistant. 
+  You are a specialized assistant.
 
   - **Name**: ${gpt[0].name}
   - **Description**: ${gpt[0].description}
 
-  ⚠️ **IMPORTANT INSTRUCTIONS:**  
+  ⚠️ **IMPORTANT INSTRUCTIONS:**
   ${gpt[0].instructions}
   `
         : `
-  You are a friendly assistant.  
+  You are a friendly assistant.
   Be polite, clear, and as detailed as possible.
   `) +
-      `📌 **Formatting Requirement:**  
-  Please output your answer in **Markdown** format.  
+      (supportsTools && process.env.NEXT_PUBLIC_SERP_API
+        ? `
+        You have access to a search_web function. Please use it for questions about recent events,
+        breaking news, any topic where your training knowledge may be outdated or if requested.
+        `
+        : `📌 **Formatting Requirement:**
+  Please output your answer in **Markdown** format.
   Feel free to add **titles, subtitles, and emojis** if necessary.
-  ${markdownInstruction}`;
+  ${markdownInstruction}`);
 
     const result = streamText({
       system: systemPrompt,
@@ -179,7 +189,23 @@ export async function POST(req) {
       messages,
       temperature: temperature / 100 || 0.7,
       maxTokens: Number(maxTokens) || 1200,
-      async onFinish({ text, reasoning, usage, response }) {
+      tools: {
+        search_web: searchWebTool,
+      },
+      toolChoice: "auto",
+      async onToolCall({ toolCall }) {
+        if (toolCall.name === "search_web") {
+          return {
+            toolCallId: toolCall.id,
+            result: toolCall.result,
+          };
+        } else {
+          console.log("Unknown tool:", toolCall.name);
+        }
+      },
+      maxSteps: 2,
+
+      async onFinish({ text, reasoning, usage }) {
         await saveUsage({
           uid: convoId,
           type: "Chat",
