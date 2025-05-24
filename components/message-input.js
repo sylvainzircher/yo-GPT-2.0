@@ -37,6 +37,7 @@ export default function MessageInput({
   const [files, setFiles] = useState(undefined);
   const [fileName, setFileName] = useState();
   const fileInputRef = useRef(null);
+  const webSearchAPIkey = process.env.NEXT_PUBLIC_SERP_API;
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -256,7 +257,7 @@ export default function MessageInput({
               </div>
             ) : (
               <div className="text-xs flex flex-row mb-2 mt-2 items-center justify-center">
-                {gptRetrieved.length > 0
+                {gptRetrieved.length > 0 && webSearchAPIkey
                   ? gptRetrieved[0].model.toLowerCase().includes("llama")
                   : settings.model?.toLowerCase().includes("llama") && (
                       <div className="flex flex-row items-center justify-center mr-4">

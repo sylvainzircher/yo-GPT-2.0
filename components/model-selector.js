@@ -8,6 +8,7 @@ export default function ModelSelector({ settings, setSettings }) {
   const [showModal, setShowModal] = useState(false);
   const modelListRef = useRef(null);
   const { mutate } = useSWRConfig();
+  const webSearchAPIkey = process.env.NEXT_PUBLIC_SERP_API;
 
   const updateModelSettings = async (type, value) => {
     try {
@@ -75,13 +76,12 @@ export default function ModelSelector({ settings, setSettings }) {
                   <div className="flex flex-col justify-start">
                     <span className="label-text">
                       <p className="font-bold">{model.name}</p>
-                      <p className="text-xs flex flex-row">
+                      <p className="text-xs flex flex-row items-center">
                         {model.price} | {model.size}
-                        {model.name.toLowerCase().includes("llama") && (
-                          <div className="flex flex-row items-center">
+                        {model.name.toLowerCase().includes("llama") &&
+                          webSearchAPIkey && (
                             <Globe size={12} className="mr-1 ml-2" />
-                          </div>
-                        )}
+                          )}
                       </p>
                     </span>
                   </div>
