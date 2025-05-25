@@ -41,7 +41,7 @@ I built **yo-GPT** to change that.
 1. **Clone the repo:**
 
    ```bash
-   git clone https://github.com/sylvainzircher/yo-GPT.git
+   git clone https://github.com/sylvainzircher/yo-GPT-2.0.git
    cd yo-GPT
 
    ```
