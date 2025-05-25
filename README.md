@@ -30,6 +30,8 @@ I built **yo-GPT** to change that.
 
 - Chat with high-quality LLMs locally
 - Build custom GPTs
+- Generate Images
+- Chat with documents (PDFs)
 - Keep full control over your data and costs
 
 <br />
