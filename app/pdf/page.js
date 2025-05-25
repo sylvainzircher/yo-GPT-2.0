@@ -1,6 +1,7 @@
 "use client";
 import { useChat } from "ai/react";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Chat from "@/components/chat";
 import Sidebar from "@/components/sidebar";
@@ -12,6 +13,8 @@ export default function chatWithDoc() {
   const [settings, setSettings] = useState({});
   const [isStreaming, setIsStreaming] = useState(false);
   const [chatStarted, setChatStarted] = useState(false);
+  const [embeddingExists, setEmbeddingExists] = useState(false);
+  const router = useRouter();
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR("/api/settings/", fetcher);
@@ -44,6 +47,25 @@ export default function chatWithDoc() {
       setIsStreaming(false);
     },
   });
+
+  useEffect(() => {
+    const checkFolderExists = async () => {
+      try {
+        const res = await fetch("/api/check-embeddings");
+        const data = await res.json();
+
+        if (!data.exists) {
+          router.push("/");
+        } else {
+          setEmbeddingExists(true);
+        }
+      } catch (error) {
+        console.error("Error checking folder:", error);
+      }
+    };
+
+    checkFolderExists();
+  }, [router]);
 
   useEffect(() => {
     if (data) {

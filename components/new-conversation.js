@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function NewConversation() {
   const [showModal, setShowModal] = useState(false);
+  const [embeddingExists, setEmbeddingExists] = useState(false);
   const documentUploaderRef = useRef(null);
   const router = useRouter();
 
@@ -22,6 +23,21 @@ export default function NewConversation() {
   const toggleShowModal = () => {
     setShowModal(!showModal);
   };
+
+  useEffect(() => {
+    // Function to check if folder exists
+    const checkFolderExists = async () => {
+      try {
+        const res = await fetch("/api/check-embeddings");
+        const data = await res.json();
+        setEmbeddingExists(data.exists);
+      } catch (error) {
+        console.error("Error checking folder existence:", error);
+      }
+    };
+
+    checkFolderExists();
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -61,9 +77,14 @@ export default function NewConversation() {
               >
                 <Bot size={16} /> New Conversation
               </button>
-              <button className="btn btn-sm text-xs ml-5" onClick={chatWithDoc}>
-                <Paperclip size={16} /> Chat to a document
-              </button>
+              {embeddingExists && (
+                <button
+                  className="btn btn-sm text-xs ml-5"
+                  onClick={chatWithDoc}
+                >
+                  <Paperclip size={16} /> Chat to a document
+                </button>
+              )}
               <button
                 className="btn btn-sm btn-secondary text-xs ml-5"
                 onClick={generateImage}
