@@ -70,14 +70,6 @@ I built **yo-GPT** to change that.
 
 <br />
 
-## 💡 What can you do with yo-GPT?
-
-- Chat with high-quality LLMs locally
-- Build custom GPTs
-- Keep full control over your data and costs
-
-<br />
-
 ## 🛠 Powered By
 
 [Fireworks.ai](https://fireworks.ai) — blazing-fast, pay-as-you-go LLM APIs
