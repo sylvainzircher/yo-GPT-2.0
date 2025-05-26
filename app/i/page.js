@@ -205,7 +205,7 @@ export default function GenerateImage() {
                   </p>
                   <p className="ml-1 flex flex-row items-center">
                     <Gauge size={12} className="ml-4 mr-1" />
-                    Cost: ${usageCost}
+                    Cost: {usageCost.toFixed(5)}$
                   </p>
                 </div>
                 <div className="flex flex-row mx-auto mb-2">
