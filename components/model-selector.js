@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { ChevronDown, Globe } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { models } from "@/data/models";
 import { useSWRConfig } from "swr";
 
@@ -8,8 +8,6 @@ export default function ModelSelector({ settings, setSettings }) {
   const [showModal, setShowModal] = useState(false);
   const modelListRef = useRef(null);
   const { mutate } = useSWRConfig();
-  const webSearchAPIkey = process.env.NEXT_PUBLIC_SERP_API;
-
   const updateModelSettings = async (type, value) => {
     try {
       const response = await fetch("/api/settings", {
@@ -78,9 +76,6 @@ export default function ModelSelector({ settings, setSettings }) {
                       <p className="font-bold">{model.name}</p>
                       <p className="text-xs flex flex-row items-center">
                         {model.price} | {model.size}
-                        {webSearchAPIkey && (
-                            <Globe size={12} className="mr-1 ml-2" />
-                          )}
                       </p>
                     </span>
                   </div>

@@ -147,28 +147,6 @@ export async function POST(req) {
       ? model_.api
       : "accounts/fireworks/models/llama-v3p3-70b-instruct";
 
-    let searchContext = "";
-    if (process.env.NEXT_PUBLIC_SERP_API) {
-      const lastMessage = messages[messages.length - 1]?.content ?? "";
-      if (lastMessage.length > 15) {
-        try {
-          const res = await fetch(
-            `https://serpapi.com/search.json?q=${encodeURIComponent(lastMessage)}&api_key=${process.env.NEXT_PUBLIC_SERP_API}&num=5`
-          );
-          const data = await res.json();
-          const results = (data.organic_results ?? [])
-            .slice(0, 5)
-            .map((r) => `- ${r.title}: ${r.snippet}`)
-            .join("\n");
-          if (results) {
-            searchContext = `\n\nCurrent web search results for context:\n${results}`;
-          }
-        } catch {
-          // silent — model answers from training data if search fails
-        }
-      }
-    }
-
     const systemPrompt =
       (gpt
         ? `
@@ -189,19 +167,26 @@ export async function POST(req) {
   Feel free to add **titles, subtitles, and emojis** if necessary.
   ${markdownInstruction}`;
 
+    const isThinkingModel = [
+      "accounts/fireworks/models/deepseek-r1",
+      "accounts/fireworks/models/kimi-k2-thinking",
+    ].includes(modelApi);
+
+    const resolvedMaxTokens = isThinkingModel
+      ? Math.max(Number(maxTokens) || 8000, 8000)
+      : Number(maxTokens) || 1200;
+
     const result = streamText({
-      system: systemPrompt + searchContext,
-      model:
-        modelApi === "accounts/fireworks/models/deepseek-r1"
-          ? wrapLanguageModel({
-              model: fireworks(modelApi),
-              middleware: extractReasoningMiddleware({ tagName: "think" }),
-            })
-          : fireworks(modelApi),
+      system: systemPrompt,
+      model: isThinkingModel
+        ? wrapLanguageModel({
+            model: fireworks(modelApi),
+            middleware: extractReasoningMiddleware({ tagName: "think" }),
+          })
+        : fireworks(modelApi),
       messages,
       temperature: temperature / 100 || 0.7,
-      maxTokens: Number(maxTokens) || 1200,
-
+      maxTokens: resolvedMaxTokens,
       async onFinish({ text, reasoning, usage }) {
         await saveUsage({
           uid: convoId,
@@ -217,10 +202,8 @@ export async function POST(req) {
       },
     });
 
-    return modelApi === "accounts/fireworks/models/deepseek-r1"
-      ? result.toDataStreamResponse({
-          sendReasoning: true,
-        })
+    return isThinkingModel
+      ? result.toDataStreamResponse({ sendReasoning: true })
       : result.toDataStreamResponse();
   } catch (error) {
     return Response.json(
