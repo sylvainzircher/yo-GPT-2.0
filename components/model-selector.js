@@ -68,7 +68,7 @@ export default function ModelSelector({ settings, setSettings }) {
         <ChevronDown className="ml-1" size={16} />
       </button>
       {showModal && (
-        <div className="card bg-base-100 w-96 h-80 shadow-xl overflow-y-auto fixed top-20 border border-neutral-content">
+        <div className="card bg-base-100 w-96 h-fit shadow-xl fixed top-20 border border-neutral-content">
           <div className="card-body">
             {models.map((model, index) => (
               <div key={index} className="p-1 rounded-xl form-control">
@@ -78,8 +78,7 @@ export default function ModelSelector({ settings, setSettings }) {
                       <p className="font-bold">{model.name}</p>
                       <p className="text-xs flex flex-row items-center">
                         {model.price} | {model.size}
-                        {model.name.toLowerCase().includes("llama") &&
-                          webSearchAPIkey && (
+                        {webSearchAPIkey && (
                             <Globe size={12} className="mr-1 ml-2" />
                           )}
                       </p>

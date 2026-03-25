@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
 
@@ -14,45 +14,35 @@ const defaultSettings = {
 
 export async function GET() {
   try {
-    if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, JSON.stringify(defaultSettings, null, 2));
+    let data;
+    try {
+      data = await fs.readFile(filePath, "utf-8");
+    } catch {
+      await fs.writeFile(filePath, JSON.stringify(defaultSettings, null, 2));
       console.log("Created settings.json with default values.");
+      data = JSON.stringify(defaultSettings);
     }
-
-    const data = fs.readFileSync(filePath, "utf-8");
     const settings = JSON.parse(data);
     return NextResponse.json({ settings });
   } catch (error) {
     console.error("Error accessing settings:", error);
+    return NextResponse.json({ error: "Failed to read settings" }, { status: 500 });
   }
 }
 
 export async function POST(req) {
   try {
     const { type, value } = await req.json();
-    const currentSettings = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const data = await fs.readFile(filePath, "utf-8");
+    const currentSettings = JSON.parse(data);
 
-    if (type === "model") {
-      currentSettings.model = value;
-    }
+    if (type === "model") currentSettings.model = value;
+    if (type === "temperature") currentSettings.temperature = value;
+    if (type === "maxTokens") currentSettings.maxTokens = value;
+    if (type === "autoSave") currentSettings.autoSave = value;
+    if (type === "autoTitle") currentSettings.autoTitle = value;
 
-    if (type === "temperature") {
-      currentSettings.temperature = value;
-    }
-
-    if (type === "maxTokens") {
-      currentSettings.maxTokens = value;
-    }
-
-    if (type === "autoSave") {
-      currentSettings.autoSave = value;
-    }
-
-    if (type === "autoTitle") {
-      currentSettings.autoTitle = value;
-    }
-
-    fs.writeFileSync(filePath, JSON.stringify(currentSettings, null, 2));
+    await fs.writeFile(filePath, JSON.stringify(currentSettings, null, 2));
 
     return Response.json({ success: true });
   } catch (error) {

@@ -4,7 +4,7 @@ import { initializeDB } from "./create-db";
 export async function renameChat(id, newTitle) {
   try {
     const db = await initializeDB();
-    db.read();
+    await db.read();
 
     const chats = db.data.chats;
     const chatToUpdate = chats.find(

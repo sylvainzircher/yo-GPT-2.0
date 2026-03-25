@@ -1,5 +1,5 @@
 {
-  "model": "Llama-3.3-405B",
+  "model": "Kimi-K2-Thinking",
   "temperature": "80",
   "maxTokens": 60000,
   "autoSave": true,

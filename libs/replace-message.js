@@ -9,8 +9,9 @@ export async function replaceMessage({
   timestamp,
   reasoning,
 }) {
+  try {
   const db = await initializeDB();
-  db.read();
+  await db.read();
 
   const assistantMessages = db.data.chats
     .filter((msg) => msg.id === id && msg.role === role)
@@ -34,4 +35,7 @@ export async function replaceMessage({
     db.data.chats.push(message);
   }
   await db.write();
+  } catch (error) {
+    console.error("Error replacing message:", error);
+  }
 }
